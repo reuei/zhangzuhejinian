@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张祖合先生纪念网</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #8e44ad;
+            --text-light: #ecf0f1;
+            --text-dark: #2c3e50;
+            --highlight: #e67e22;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #121212;
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+        }
+        
+        /* Particle background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #0d0d17;
+        }
+        
+        /* Header Styles */
+        .top-bar {
+            background-color: rgba(44, 62, 80, 0.95);
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            font-size: 14px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: rgba(23, 32, 42, 0.9);
+            border-bottom: 1px solid rgba(236, 240, 241, 0.1);
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        
+        .logo span {
+            color: var(--highlight);
+        }
+        
+        /* Navigation */
+        .nav-menu {
+            display: flex;
+        }
+        
+        .nav-item {
+            margin: 0 15px;
+            position: relative;
+        }
+        
+        .nav-item a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-item a:hover, .nav-item a.active {
+            background-color: rgba(142, 68, 173, 0.3);
+            color: var(--highlight);
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+        
+        .hero h2 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(231, 126, 34, 0.5);
+            animation: fadeInDown 1.5s ease-out;
+        }
+        
+        .hero-dates {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 0.5s forwards;
+        }
+        
+        .hero-dates div {
+            margin: 0 15px;
+            position: relative;
+        }
+        
+        .hero-dates div::before {
+            content: "•";
+            position: absolute;
+            left: -20px;
+            color: var(--highlight);
+        }
+        
+        .hero-dates div:first-child::before {
+            content: none;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 1s forwards;
+        }
+        
+        /* Memorial Content */
+        .memorial-section {
+            padding: 5rem 10%;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h3 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .section-header h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--highlight);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: rgba(142, 68, 173, 0.3);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: rgba(44, 62, 80, 0.7);
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+        
+        .timeline-content h4 {
+            color: var(--highlight);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .circle {
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-color);
+            border: 4px solid var(--highlight);
+            border-radius: 50%;
+            position: absolute;
+            right: -10px;
+            top: 32px;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(even) .circle {
+            left: -10px;
+        }
+        
+        .family-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 3rem;
+        }
+        
+        .family-member {
+            flex: 1;
+            min-width: 220px;
+            background: linear-gradient(145deg, rgba(52, 73, 94, 0.7), rgba(44, 62, 80, 0.7));
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .family-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(231, 126, 34, 0.4);
+        }
+        
+        .family-member h5 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--highlight);
+        }
+        
+        .tribute-section {
+            background-color: rgba(23, 32, 42, 0.9);
+            padding: 5rem 10%;
+            text-align: center;
+            margin: 5rem 0;
+        }
+        
+        .tribute-box {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 15px;
+            background: rgba(44, 62, 80, 0.6);
+            border: 1px solid rgba(142, 68, 173, 0.5);
+            box-shadow: 0 0 30px rgba(142, 68, 173, 0.3);
+            animation: pulse 2s infinite alternate;
+        }
+        
+        .tribute-box p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .flower-animation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 2rem;
+        }
+        
+        .flower {
+            font-size: 2rem;
+            animation: float 5s ease-in-out infinite;
+            color: #e74c3c;
+        }
+        
+        .flower:nth-child(2) {
+            animation-delay: 0.5s;
+            color: #f1c40f;
+        }
+        
+        .flower:nth-child(3) {
+            animation-delay: 1s;
+            color: #9b59b6;
+        }
+        
+        .flower:nth-child(4) {
+            animation-delay: 1.5s;
+            color: #3498db;
+        }
+        
+        .flower:nth-child(5) {
+            animation-delay: 2s;
+            color: #2ecc71;
+        }
+        
+        /* Support Section */
+        .support-section {
+            padding: 3rem 10%;
+            text-align: center;
+        }
+        
+        .support-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .support-item {
+            background-color: rgba(44, 62, 80, 0.8);
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: rgba(23, 32, 42, 0.95);
+            padding: 3rem 10%;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .candle-section {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+        }
+        
+        .candle {
+            position: relative;
+            width: 60px;
+            height: 150px;
+            margin: 0 20px;
+            transform: translateY(0);
+            animation: floatCandle 4s ease-in-out infinite;
+        }
+        
+        .candle:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .candle:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        .candle-wick {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 20px;
+            background: #333;
+            border-radius: 2px;
+        }
+        
+        .candle-flame {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 40px;
+            background: #ff5722;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 20px #ff5722, 0 0 40px #ff9800;
+            animation: flame 1.5s ease-in-out infinite alternate;
+        }
+        
+        .candle-body {
+            position: absolute;
+            width: 60px;
+            height: 120px;
+            background: #f5f5f5;
+            border-radius: 30px 30px 8px 8px;
+            box-shadow: inset -10px 0 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 15px rgba(142, 68, 173, 0.4);
+            }
+            100% {
+                box-shadow: 0 0 35px rgba(142, 68, 173, 0.7);
+            }
+        }
+        
+        @keyframes flame {
+            0%, 100% {
+                height: 35px;
+                border-radius: 50% 50% 25% 25%;
+            }
+            50% {
+                height: 45px;
+                border-radius: 50% 50% 20% 20%;
+                box-shadow: 0 0 25px #ff5722, 0 0 50px #ff9800;
+            }
+        }
+        
+        @keyframes floatCandle {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .timeline::before {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .circle {
+                left: 21px !important;
+                right: auto;
+            }
+            
+            .hero h2 {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+            
+            .memorial-section, .tribute-section, .support-section {
+                padding: 3rem 5%;
+            }
+            
+            .support-logos {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <div class="top-bar">
+        <div class="official-announcement">
+            青岛市黄岛区理务关镇卫生院、黄岛殡葬 联合主办
+        </div>
+        <div class="datetime">
+            2025年7月10日 星期四
+        </div>
+    </div>
+    
+    <header class="header">
+        <div class="logo">
+            <h1>张祖合<span>先生纪念网</span></h1>
+        </div>
+        <nav class="nav">
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#" class="active">首页</a></li>
+                <li class="nav-item"><a href="#">生平事迹</a></li>
+                <li class="nav-item"><a href="#">追思留念</a></li>
+                <li class="nav-item"><a href="#">照片集锦</a></li>
+                <li class="nav-item"><a href="#">亲友留言</a></li>
+                <li class="nav-item"><a href="#">悼念安排</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h2>沉痛悼念张祖合同志</h2>
+            <div class="hero-dates">
+                <div>1950年10月</div>
+                <div>至</div>
+                <div>2025年7月9日21时59分</div>
+            </div>
+            <p>张祖合同志因病逝世，享年七十七岁。他是一位忠厚朴实的农民、体贴的丈夫、慈爱的父亲、温暖的外公。他安详地走完了人生旅程，永远活在我们的心中。</p>
+            <div class="flower-animation">
+                <div class="flower">🌸</div>
+                <div class="flower">🌼</div>
+                <div class="flower">🌺</div>
+                <div class="flower">🌷</div>
+                <div class="flower">🌹</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="memorial-section">
+        <div class="section-header">
+            <h3>生平经历</h3>
+            <p>回顾张祖合同志的传奇人生</p>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>出生与成长</h4>
+                    <p>1950年10月，张祖合同志出生于一个普通农民家庭。从小在乡村环境中成长，培养了他朴实勤劳的品质和对土地的深厚感情。</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>成家立业</h4>
+                    <p>20世纪70年代，与挚爱的妻子丁兆娥喜结连理。在接下来的岁月里，他们共同养育了两位优秀的女儿：张庆娟和张庆燕。</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>多才多艺</h4>
+                    <p>张祖合同志不仅是一位勤劳的农民，还掌握了独特的针灸技艺。他乐善好施，常为邻里乡亲提供帮助。闲暇时喜欢听唱戏、养花，尤其对菊花情有独钟。</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>慈爱长辈</h4>
+                    <p>作为外祖父，他对外孙张涛(介称)和白佳斌倾注了无微不至的关爱。晚年最大的幸福就是看着孙辈们茁壮成长。</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>人生落幕</h4>
+                    <p>2025年7月9日21时59分，因心脏病突发安详离世，享年七十七岁。他平静地结束了生命的旅程，回到了土地的怀抱。</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+        </div>
+        
+        <div class="section-header" style="margin-top: 5rem;">
+            <h3>至亲家人</h3>
+            <p>张祖合同志深爱的家人</p>
+        </div>
+        
+        <div class="family-section">
+            <div class="family-member">
+                <i class="fas fa-heart fa-2x" style="color: #e74c3c;"></i>
+                <h5>妻子</h5>
+                <p>丁兆娥</p>
+            </div>
+            
+            <div class="family-member">
+                <i class="fas fa-female fa-2x" style="color: #9b59b6;"></i>
+                <h5>女儿</h5>
+                <p>张庆娟 • 张庆燕</p>
+            </div>
+            
+            <div class="family-member">
+                <i class="fas fa-child fa-2x" style="color: #3498db;"></i>
+                <h5>外孙</h5>
+                <p>张涛(介称) • 白佳斌</p>
+            </div>
+            
+            <div class="family-member">
+                <i class="fas fa-users fa-2x" style="color: #f1c40f;"></i>
+                <h5>其他亲人</h5>
+                <p>白利国 • 张庆云 • 张庆春 • 张庆杰 • 曲永海 • 曲艳平</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="tribute-section">
+        <div class="tribute-box">
+            <p>"父亲一生勤劳朴实，虽然平凡却极有尊严。他不善言辞却用行动表达着对家人的爱。记得小时候，每当我在田间跌倒哭泣，父亲总会抱起我，用他那双粗糙但温暖的大手擦干我的眼泪..."</p>
+            <p>—— 女儿 张庆娟</p>
+        </div>
+        
+        <div class="candle-section">
+            <div class="candle">
+                <div class="candle-wick"></div>
+                <div class="candle-flame"></div>
+                <div class="candle-body"></div>
+            </div>
+            <div class="candle">
+                <div class="candle-wick"></div>
+                <div class="candle-flame"></div>
+                <div class="candle-body"></div>
+            </div>
+            <div class="candle">
+                <div class="candle-wick"></div>
+                <div class="candle-flame"></div>
+                <div class="candle-body"></div>
+            </div>
+        </div>
+        
+        <div class="tribute-box">
+            <p>"外公平日里话语不多，但他对我们的爱像他精心栽培的花朵一样，安静而持久。他最开心的事就是看着我和弟弟在院子里玩耍。外公，我会永远记得您讲的那些故事，记得您教我认花的那些午后..."</p>
+            <p>—— 外孙 张涛</p>
+        </div>
+    </section>
+    
+    <section class="support-section">
+        <div class="section-header">
+            <h3>支持单位</h3>
+            <p>向提供帮助的单位致以衷心的感谢</p>
+        </div>
+        
+        <div class="support-logos">
+            <div class="support-item">
+                <i class="fas fa-hospital"></i>
+                青岛市黄岛区理务关镇卫生院
+            </div>
+            <div class="support-item">
+                <i class="fas fa-landmark"></i>
+                黄岛殡葬
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <p>张祖合同志，您将永远活在我们心中。</p>
+        <p>1950年10月 — 2025年7月9日</p>
+        <div class="flower-animation" style="margin-top: 20px;">
+            <div class="flower">🌸</div>
+            <div class="flower">🌼</div>
+            <div class="flower">🌺</div>
+            <div class="flower">🌷</div>
+            <div class="flower">🌹</div>
+        </div>
+        <p style="margin-top: 30px; opacity: 0.8;">本纪念网站由家人创建 © 2025</p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // 初始化粒子背景
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 60, density: { enable: true, value_area: 800 } },
+                    color: { value: "#e67e22" },
+                    opacity: { value: 0.3, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#e67e22",
+                        opacity: 0.1,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "repulse" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    }
+                }
+            });
+            
+            // 更新当前日期时间
+            function updateDateTime() {
+                const now = new Date();
+                const options = { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false,
+                    weekday: 'long'
+                };
+                const dateStr = now.toLocaleDateString('zh-CN', options);
+                document.querySelector('.datetime').textContent = dateStr;
+            }
+            
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+        });
+        
+        // 滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 1s ease-out forwards';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.timeline-item, .family-member').forEach(item => {
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>
